@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "299561811447",
+    "firebase_url": "https://untagkos.firebaseio.com",
+    "project_id": "untagkos",
+    "storage_bucket": "untagkos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299561811447:android:36366d22c70014e5",
+        "android_client_info": {
+          "package_name": "com.example.project.untagkos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299561811447-7fmonh91r353fngas4oa6lu5mk3dktgg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project.untagkos",
+            "certificate_hash": "630f3848593e1f0b9441edca81527bfaa151112d"
+          }
+        },
+        {
+          "client_id": "299561811447-5gej2a47tr7gfmfp0b8ao368lalhtbtf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDQ3_jEgE3qdXdQdm7RsRhAEQMXrK6gUM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299561811447-5gej2a47tr7gfmfp0b8ao368lalhtbtf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
