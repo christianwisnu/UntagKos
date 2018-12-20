@@ -21,6 +21,7 @@ import com.android.volley.error.ServerError;
 import com.android.volley.error.TimeoutError;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.JsonObjectRequest;
+import com.example.project.untagkos.InfoKos;
 import com.example.project.untagkos.R;
 
 import org.json.JSONArray;
@@ -80,7 +81,7 @@ public class FListKos extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> Parent, View view, int position,
                                     long id) {
-                /*Intent i = new Intent(getActivity(), InfoKos.class);
+                Intent i = new Intent(getActivity(), InfoKos.class);
                 i.putExtra("id_kos", columnlist.get(position).getId_kos());
                 i.putExtra("idUser", idUser);
                 i.putExtra("i_idcust", columnlist.get(position).getId_cust());
@@ -108,7 +109,7 @@ public class FListKos extends Fragment {
                 i.putExtra("i_sisa", columnlist.get(position).getSisa());
                 i.putExtra("rating", columnlist.get(position).getRating());
                 i.putExtra("countUser", columnlist.get(position).getCountUser());
-                getActivity().startActivity(i);*/
+                getActivity().startActivity(i);
             }
         });
 

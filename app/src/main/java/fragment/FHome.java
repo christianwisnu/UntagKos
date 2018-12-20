@@ -28,6 +28,8 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.project.untagkos.MapAllKos;
+import com.example.project.untagkos.MapsActivity;
 import com.example.project.untagkos.R;
 import com.google.gson.Gson;
 
@@ -178,11 +180,12 @@ public class FHome extends Fragment {
                                     columnlist.add(colums);
                                 }
                                 Gson gson = new Gson();
-                                /*Intent i = new Intent(getContext(), MapAllKos.class);
+                                Intent i = new Intent(getContext(), MapAllKos.class);
                                 String jsonString = gson.toJson(columnlist);
                                 i.putExtra("list", jsonString);
                                 i.putExtra("idUser", String.valueOf(idUser));
-                                startActivityForResult(i,3);*/
+                                startActivityForResult(i,3);
+                                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                             }else{
                                 Toast.makeText(getContext(),"Data tidak ada!", Toast.LENGTH_LONG).show();
                             }

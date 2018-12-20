@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "299561811447",
-    "firebase_url": "https://untagkos.firebaseio.com",
-    "project_id": "untagkos",
-    "storage_bucket": "untagkos.appspot.com"
+    "project_number": "50696649460",
+    "firebase_url": "https://eternal-water-226108.firebaseio.com",
+    "project_id": "eternal-water-226108",
+    "storage_bucket": "eternal-water-226108.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:299561811447:android:36366d22c70014e5",
+        "mobilesdk_app_id": "1:50696649460:android:36366d22c70014e5",
         "android_client_info": {
           "package_name": "com.example.project.untagkos"
         }
       },
       "oauth_client": [
         {
-          "client_id": "299561811447-7fmonh91r353fngas4oa6lu5mk3dktgg.apps.googleusercontent.com",
+          "client_id": "50696649460-25gke60kimo05pbjohcn8b8kcujk6a8a.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.project.untagkos",
@@ -23,13 +23,21 @@
           }
         },
         {
-          "client_id": "299561811447-5gej2a47tr7gfmfp0b8ao368lalhtbtf.apps.googleusercontent.com",
+          "client_id": "50696649460-8rgps1pcgl8l9kcikouj6b5n0ljij5k8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project.untagkos",
+            "certificate_hash": "f1b3008b45238f709e8f850ca0558f72ffce27db"
+          }
+        },
+        {
+          "client_id": "50696649460-kt942dujan56nqudjldqev7s7cae1ps1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBDQ3_jEgE3qdXdQdm7RsRhAEQMXrK6gUM"
+          "current_key": "AIzaSyAkyja1HDK9RuT1PJ4PHNaH9eNgemy9RGo"
         }
       ],
       "services": {
@@ -40,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "299561811447-5gej2a47tr7gfmfp0b8ao368lalhtbtf.apps.googleusercontent.com",
+              "client_id": "50696649460-kt942dujan56nqudjldqev7s7cae1ps1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
