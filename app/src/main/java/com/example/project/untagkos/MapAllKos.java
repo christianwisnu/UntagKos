@@ -2,6 +2,7 @@ package com.example.project.untagkos;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -48,18 +50,15 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener{
 
-    protected LatLng mCenterLocation = new LatLng( 39.7392, -104.9903 );
     private GoogleMap mMap;
     private Location mLastLocation;
     private Marker mCurrLocationMarker;
-    private double latitude, longtitude, latgpsg, longgpas;
     private ClusterManager<StringClusterItem> mClusterManager;
     private String namaKos, telp, idUser, jsonString;
     private String getData	="getListAllKos.php";
     private ImageView ImgSwitchView,ImgZoomIn,ImgZoomOut, imgBack;
     private TextView tvstatus;
     private ProgressBar prbstatus;
-    //private GPSTracker gps;
     private int Tag=1;
     private LocationRequest mLocationRequest;
     private NumberFormat rupiah	= NumberFormat.getNumberInstance(new Locale("in", "ID"));
@@ -68,6 +67,7 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
     private static final long INTERVAL = 1000 * 2 * 1; //2 detik
     private static final long FASTEST_INTERVAL = 1000 * 1 * 1; // 1 detik
     private GoogleApiClient mGoogleApiClient;
+    private Integer a=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,6 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
         ImgSwitchView   = (ImageView) findViewById(R.id.imgMapsAllKos);
         ImgZoomIn       = (ImageView) findViewById(R.id.imgZoomInAllKos);
         ImgZoomOut      = (ImageView) findViewById(R.id.imgZoomOutAllKos);
-        //ImgLocation      = (ImageView) findViewById(R.id.imgMyLocationAllKos);
         imgBack      = (ImageView) findViewById(R.id.ImbMapAllKosBack);
         tvstatus	= (TextView)findViewById(R.id.TvStatusUploadAllKos);
         prbstatus	= (ProgressBar)findViewById(R.id.PrbStatusUploadAllKos);
@@ -108,13 +107,13 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
             }
         });
 
-        /*if (mGoogleApiClient == null) {
+        if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-        }*/
+        }
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
         }
@@ -281,32 +280,29 @@ public class MapAllKos extends AppCompatActivity implements OnMapReadyCallback,
             if (ContextCompat.checkSelfPermission(this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
-                //buildGoogleApiClient();
+                buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
         }
         else {
-            //buildGoogleApiClient();
+            buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
-        /*ImgLocation.performClick();
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
-        // Showing / hiding your current location
-        mMap.setMyLocationEnabled(true);
-        // Enable / Disable zooming controls
-        // Enable / Disable my location button
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        // Enable / Disable Compass icon
-        mMap.getUiSettings().setCompassEnabled(true);
-        // Enable / Disable Rotate gesture
-        mMap.getUiSettings().setRotateGesturesEnabled(true);
-        // Enable / Disable zooming functionality
-        mMap.getUiSettings().setZoomGesturesEnabled(true);
-        //Enable / Disable Button Zooming
-        mMap.getUiSettings().setZoomControlsEnabled(false);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(13), 200, null);
-        createLocationRequest();*/
+
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+                if(a.intValue()==0){
+                    CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
+                    CameraUpdate zoom = CameraUpdateFactory.zoomTo(11);
+                    //mMap.clear();
+
+                    mMap.moveCamera(center);
+                    mMap.animateCamera(zoom);
+                    a++;
+                }
+            }
+        });
 
         mClusterManager = new ClusterManager<StringClusterItem>(this, mMap);
 

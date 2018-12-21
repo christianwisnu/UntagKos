@@ -368,10 +368,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
-                android:background="@drawable/slctcylelinewhiteorange"
+                android:background="@drawable/slctbutton"
                 android:text="Booking"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/md_red_900"
+                android:textColor="@color/md_white"
                 android:textStyle="bold" />
 
             <TextView

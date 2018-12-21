@@ -34,7 +34,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-//import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -75,7 +75,11 @@ import service.BaseApiService;
 import session.SessionManager;
 
 public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
-        BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener, RatingDialogListener {
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        BaseSliderView.OnSliderClickListener,
+        ViewPagerEx.OnPageChangeListener,
+        RatingDialogListener {
 
     private ProgressDialog pDialog;
     private GoogleMap mGoogleMap;
@@ -236,6 +240,16 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         /*mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addApi(AppIndex.API).build();*/
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
         SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.frgMapsInfoKos);
         fm.getMapAsync(this);
 
@@ -246,6 +260,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         }else{
             imgGiveRate.setVisibility(View.INVISIBLE);
         }
+
         telefon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,6 +320,26 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
 
     @Override
     public void onNeutralButtonClicked() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 
@@ -444,9 +479,9 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         }
         txtCountUser.setText(String.valueOf(countUser));
 
-        /*ratingDatabase.setClickable(false);
+        ratingDatabase.setClickable(false);
         ratingDatabase.setScrollable(false);
-        ratingDatabase.setRating(hasilRating.floatValue());*/
+        ratingDatabase.setRating(hasilRating.floatValue());
     }
 
     private void loadJSON(){
