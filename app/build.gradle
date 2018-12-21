@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.github.ome450901:SimpleRatingBar:1.4.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     implementation 'com.squareup.picasso:picasso:2.3.2'
+    implementation 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 
     implementation 'com.google.maps.android:android-maps-utils:0.4.2'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'

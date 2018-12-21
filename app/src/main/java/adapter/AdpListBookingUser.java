@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.project.untagkos.BayarDP;
 import com.example.project.untagkos.R;
 
 import java.util.List;
@@ -87,10 +88,10 @@ public class AdpListBookingUser extends ArrayAdapter<ColHomeBooking> {
         holder.TvDP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent i = new Intent(getContext(), BayarDP.class);
+                Intent i = new Intent(getContext(), BayarDP.class);
                 i.putExtra("idBooking", columnslist.get(position).getIdBooking());
                 i.putExtra("idCust", columnslist.get(position).getIdCust());
-                getContext().startActivity(i);*/
+                getContext().startActivity(i);
             }
         });
         return v;

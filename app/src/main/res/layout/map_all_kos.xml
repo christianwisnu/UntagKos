@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:textColor="@color/White_Snow"
-            android:text="Maps Nearby Kos"/>
+            android:text="UNTAG Kos"/>
 
     </LinearLayout>
 

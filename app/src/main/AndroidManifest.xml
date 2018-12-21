@@ -21,10 +21,9 @@
         android:name="control.AppController"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SplashActivity">
@@ -42,6 +41,16 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".InfoKos" />
         <activity android:name=".MapAllKos" />
+        <activity android:name=".AddHomeKos" />
+        <activity android:name=".AddRekeningCust" />
+        <activity android:name=".SearchBank" />
+        <activity android:name=".BayarDP" />
+        <activity android:name=".ErorrBug" />
+        <activity
+            android:name=".Map"
+            android:configChanges="keyboardHidden|orientation"
+            android:protectionLevel="signature"
+            android:screenOrientation="portrait" />
 
         <service android:name="service.MyFirebaseMessagingService">
             <intent-filter>

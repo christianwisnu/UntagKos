@@ -21,9 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="UNTAG KOS"
-            android:textColor="@color/md_black"
+            android:textColor="@color/md_blue_900"
             android:textStyle="bold"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:fontFamily="serif"/>
 
     </LinearLayout>
 

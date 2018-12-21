@@ -10,6 +10,26 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="text_large_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/text_margin</item>
+        <item name="android:layout_marginRight">@dimen/text_margin</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">"Large Bold"</item>
+    </style>
+
+    <style name="text_medium_normal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/text_margin</item>
+        <item name="android:layout_marginRight">@dimen/text_margin</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:text">"Medium Normal"</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

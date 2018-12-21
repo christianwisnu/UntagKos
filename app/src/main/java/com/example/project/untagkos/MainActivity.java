@@ -49,7 +49,11 @@ import java.util.List;
 import control.AppController;
 import control.Link;
 import control.RequestPermissionHandler;
+import fragment.FAwalCust;
+import fragment.FCustRekening;
 import fragment.FHome;
+import fragment.FHomeKos;
+import fragment.FListBookingUser;
 import fragment.FListKos;
 import model.ColHomeDetail;
 import session.SessionManager;
@@ -121,7 +125,7 @@ public class MainActivity extends AppCompatActivity
         }else if(sstatus.equals("USER")){
             changeFragment2ListUploadUserKriteria(new FHome(), String.valueOf(sid), "ALL");
         }else if(sstatus.equals("CUST")){
-            //changeFragment(new FAwalCust());
+            changeFragment(new FAwalCust());
         }
     }
 
@@ -174,19 +178,19 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.masterKos) {
-            //changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "1");
+            changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "1");
         } else if (id == R.id.menuHomeAwal) {
             changeFragment2ListUploadUserKriteria(new FHome(), String.valueOf(sid), "ALL");
         } else if (id == R.id.bookingKos) {
-            //changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "2");
+            changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "2");
         } else if (id == R.id.masterbank) {
-            //changeFragmentListCustKriteria(new FCustRekening(), String.valueOf(sid));
+            changeFragmentListCustKriteria(new FCustRekening(), String.valueOf(sid));
         } else if (id == R.id.dataSewaKos) {//List penyewa
-            //changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "3");
+            changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "3");
         } else if (id == R.id.menuListKos) {
             changeFragment2ListUploadUserKriteria(new FListKos(), String.valueOf(sid), "ALL");
         } else if (id == R.id.menuBooking) {
-            //changeFragmentListUploadUserKriteria(new FListBookingUser(), String.valueOf(sid));
+            changeFragmentListUploadUserKriteria(new FListBookingUser(), String.valueOf(sid));
         } else if (id == R.id.menuMap) {
             CheckGpsStatus();
             if(GpsStatus == true){
@@ -361,12 +365,12 @@ public class MainActivity extends AppCompatActivity
                                     // list gmbar bl
                                     columnlist.add(colums);
                                 }
-                                /*Gson gson = new Gson();
+                                Gson gson = new Gson();
                                 Intent i = new Intent(getApplication(), MapAllKos.class);
                                 String jsonString = gson.toJson(columnlist);
                                 i.putExtra("list", jsonString);
-                                i.putExtra("idUser", String.valueOf(sid))
-                                startActivityForResult(i,3);*/
+                                i.putExtra("idUser", String.valueOf(sid));
+                                startActivityForResult(i,3);
                             }else{
                                 Toast.makeText(getApplicationContext(),"Data tidak ada!", Toast.LENGTH_LONG).show();
                             }
