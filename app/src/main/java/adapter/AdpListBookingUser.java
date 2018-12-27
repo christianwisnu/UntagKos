@@ -70,14 +70,17 @@ public class AdpListBookingUser extends ArrayAdapter<ColHomeBooking> {
             status="Belum terkonfirmasi";
             holder.TvStatusListKos.setText(status);
             holder.TvStatusListKos.setTextColor(Color.MAGENTA);
+            holder.TvDP.setVisibility(View.VISIBLE);
         }else if(columnslist.get(position).getStatusBooking().equals("D")){
             status="Status ditolak";
             holder.TvStatusListKos.setText(status);
             holder.TvStatusListKos.setTextColor(Color.RED);
+            holder.TvDP.setVisibility(View.GONE);
         }else{
             status = "Status diterima";
             holder.TvStatusListKos.setText(status);
             holder.TvStatusListKos.setTextColor(Color.BLUE);
+            holder.TvDP.setVisibility(View.GONE);
         }
 
         if (holder.ImgGmbrListKos.getTag()==null||!holder.ImgGmbrListKos.getTag().equals(url)){
@@ -88,10 +91,12 @@ public class AdpListBookingUser extends ArrayAdapter<ColHomeBooking> {
         holder.TvDP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), BayarDP.class);
-                i.putExtra("idBooking", columnslist.get(position).getIdBooking());
-                i.putExtra("idCust", columnslist.get(position).getIdCust());
-                getContext().startActivity(i);
+                if(columnslist.get(position).getStatusBooking().equals("N")){
+                    Intent i = new Intent(getContext(), BayarDP.class);
+                    i.putExtra("idBooking", columnslist.get(position).getIdBooking());
+                    i.putExtra("idCust", columnslist.get(position).getIdCust());
+                    getContext().startActivity(i);
+                }
             }
         });
         return v;

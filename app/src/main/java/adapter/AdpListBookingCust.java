@@ -31,6 +31,7 @@ import com.example.project.untagkos.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,6 +39,10 @@ import control.AppController;
 import control.Link;
 import control.Utils;
 import model.ColHomeBooking;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import service.BaseApiService;
 
 /**
  * Created by Chris on 26/06/2017.
@@ -60,6 +65,7 @@ public class AdpListBookingCust extends ArrayAdapter<ColHomeBooking> {
     private ImageView imgBukti;
     private TextView txtKet;
     private String url 		= Link.FileImage;
+    private BaseApiService mApiService;
 
     public AdpListBookingCust(Context context, int resource, List<ColHomeBooking> objects) {
         super(context, resource,  objects);
@@ -72,6 +78,7 @@ public class AdpListBookingCust extends ArrayAdapter<ColHomeBooking> {
     @Override
     public View getView (final int position, final View convertView, final ViewGroup parent){
         View v	=	convertView;
+        mApiService         = Link.getAPIService();
         if (v == null){
             holder	=	new ViewHolder();
             v= vi.inflate(Resource, null);
@@ -196,57 +203,37 @@ public class AdpListBookingCust extends ArrayAdapter<ColHomeBooking> {
         alert.show();
     }
 
-    private void sendNotification(final String userId, final String message){
-        JsonObjectRequest jsonget = new JsonObjectRequest(Request.Method.GET, Link.BASE_URL_NOTIF, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            int sucses= response.getInt("success");
-                            if (sucses==1){
-
-                            }else{
-                                //tvstatus.setText("Tidak Ada Data");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
+    private void notif2(final String userId, final String message, final String judul){
+        mApiService.notif(userId, message, judul).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    //tvstatus.setText("Check Koneksi Internet Anda");
-                } else if (error instanceof AuthFailureError) {
-                    //tvstatus.setText("AuthFailureError");
-                } else if (error instanceof ServerError) {
-                    //tvstatus.setText("Check ServerError");
-                } else if (error instanceof NetworkError) {
-                    //tvstatus.setText("Check NetworkError");
-                } else if (error instanceof ParseError) {
-                    //tvstatus.setText("Check ParseError");
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                        if (jsonRESULTS.getString("value").equals("false")){
+                            if (jsonRESULTS.getString("value").equals("false")){
+                                //Toast.makeText(InfoKos.this, "berhasil", Toast.LENGTH_LONG).show();
+                            } else {
+                                //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }catch (JSONException e) {
+                        //Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }catch (IOException e) {
+                        //Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }else{
+                    //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
                 }
             }
-        }){
+
             @Override
-            protected java.util.Map<String, String> getParams() {
-                java.util.Map<String, String> params = new HashMap<String, String>();
-                params.put("topics", userId);
-                params.put("message", message);
-                params.put("judul", "Pemberitahuan");
-                return params;
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
             }
-            @Override
-            public java.util.Map<String, String> getHeaders() throws AuthFailureError {
-                java.util.Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                return params;
-            }
-        };
-        AppController.getInstance().getRequestQueue().getCache().invalidate(Link.BASE_URL_NOTIF, true);
-        AppController.getInstance().addToRequestQueue(jsonget);
+        });
     }
 
     private void updateData(String save, final String status, final Integer idUser, final Integer idKos, final Integer idCust){
@@ -261,9 +248,11 @@ public class AdpListBookingCust extends ArrayAdapter<ColHomeBooking> {
                             slasid		=String.valueOf(Sucsess);
                             if (Sucsess >0 ){
                                 if(status.equals("A")){
-                                    sendNotification(idUser+"U", "Owner Kos menerima permintaan anda");
+                                    notif2(String.valueOf(idUser)+"U", "Owner Kos menerima permintaan anda",
+                                            "Pemberitahuan");
                                 }else if(status.equals("D")){
-                                    sendNotification(idUser+"U", "Owner Kos menolak permintaan anda");
+                                    notif2(String.valueOf(idUser)+"U", "Owner Kos menolak permintaan anda",
+                                            "Pemberitahuan");
                                 }
                                 Toast.makeText(getContext(),
                                         "Sukses!", Toast.LENGTH_LONG)

@@ -26,4 +26,11 @@ public interface BaseApiService {
                                   @Field("rate") double rate
     );
 
+    @FormUrlEncoded
+    @POST("notif2.php")
+    Call<ResponseBody> notif(@Field("topics") String id,
+                                  @Field("message") String pesan,
+                                  @Field("judul") String judul
+    );
+
 }

@@ -45,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +57,10 @@ import control.AsyncInvokeURLTask;
 import control.CheckValidation;
 import control.Link;
 import control.Utils;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import service.BaseApiService;
 
 /**
  * Created by Chris on 18/01/2018.
@@ -75,12 +80,14 @@ public class BayarDP extends Activity {
     public static String[] ARRJENIS=null;
     private String hasilspinjenis;
     private TextInputLayout inputLayoutNamaBank, inputLayoutNoRek;
+    private BaseApiService mApiService;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.proses_dp);
         Bundle i = getIntent().getExtras();
+        mApiService         = Link.getAPIService();
         if (i != null){
             try {
                 idBooking = i.getInt("idBooking");
@@ -304,7 +311,7 @@ public class BayarDP extends Activity {
                             int Sucsess = jsonrespon.getInt("success");
                             slashid		= String.valueOf(Sucsess);
                             if (Sucsess >0 ){
-                                sendNotification(String.valueOf(idCust)+"O", "Bukti DP sudah dikirim");
+                                notif2(String.valueOf(idCust)+"O", "Bukti DP sudah dikirim", "Bukti pembayaran sewa kos");
                                 Toast.makeText(getApplicationContext(),
                                         "Proses berhasil!", Toast.LENGTH_SHORT)
                                         .show();
@@ -356,57 +363,37 @@ public class BayarDP extends Activity {
         AppController.getInstance().addToRequestQueue(simpan);
     }
 
-    private void sendNotification(final String userId, final String message){
-        JsonObjectRequest jsonget = new JsonObjectRequest(Request.Method.GET, Link.BASE_URL_NOTIF, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            int sucses= response.getInt("success");
-                            if (sucses==1){
-
-                            }else{
-                                //tvstatus.setText("Tidak Ada Data");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
+    private void notif2(final String userId, final String message, final String judul){
+        mApiService.notif(userId, message, judul).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    //tvstatus.setText("Check Koneksi Internet Anda");
-                } else if (error instanceof AuthFailureError) {
-                    //tvstatus.setText("AuthFailureError");
-                } else if (error instanceof ServerError) {
-                    //tvstatus.setText("Check ServerError");
-                } else if (error instanceof NetworkError) {
-                    //tvstatus.setText("Check NetworkError");
-                } else if (error instanceof ParseError) {
-                    //tvstatus.setText("Check ParseError");
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                        if (jsonRESULTS.getString("value").equals("false")){
+                            if (jsonRESULTS.getString("value").equals("false")){
+                                //Toast.makeText(InfoKos.this, "berhasil", Toast.LENGTH_LONG).show();
+                            } else {
+                                //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }catch (JSONException e) {
+                        //Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }catch (IOException e) {
+                        //Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }else{
+                    //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
                 }
             }
-        }){
+
             @Override
-            protected java.util.Map<String, String> getParams() {
-                java.util.Map<String, String> params = new HashMap<String, String>();
-                params.put("topics", userId);
-                params.put("message", message);
-                params.put("judul", "Bukti pembayaran DP Kos");
-                return params;
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
             }
-            @Override
-            public java.util.Map<String, String> getHeaders() throws AuthFailureError {
-                java.util.Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                return params;
-            }
-        };
-        AppController.getInstance().getRequestQueue().getCache().invalidate(Link.BASE_URL_NOTIF, true);
-        AppController.getInstance().addToRequestQueue(jsonget);
+        });
     }
 
     private void uploadingImage(String url, final String ImageName){

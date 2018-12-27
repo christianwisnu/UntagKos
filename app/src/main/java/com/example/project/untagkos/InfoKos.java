@@ -543,6 +543,39 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
         GetCountData(Link.FilePHP+cekBooking);
     }
 
+    private void notif2(final String userId, final String message, final String judul){
+        mApiService.notif(userId, message, judul).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                        if (jsonRESULTS.getString("value").equals("false")){
+                            if (jsonRESULTS.getString("value").equals("false")){
+                                //Toast.makeText(InfoKos.this, "berhasil", Toast.LENGTH_LONG).show();
+                            } else {
+                                //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }catch (JSONException e) {
+                        //Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }catch (IOException e) {
+                        //Toast.makeText(InfoKos.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }else{
+                    //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //Toast.makeText(InfoKos.this, "GAGAL", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
@@ -737,7 +770,9 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
                     slasid		=String.valueOf(Sucsess);
                     Log.i("Suceses", String.valueOf(Sucsess));
                     if (Sucsess > 0 ){
-                        sendNotification(idCust+"O", "Ada user yang booking kos");
+                        //Link.BASE_URL_NOTIF+"?topics="+userId+
+                        //                "&message="+message+"&judul=Booking kos"
+                        notif2(idCust+"O", "Ada user yang booking kos", "Booking Kos");
                         Toast.makeText(InfoKos.this,
                                 "Data berhasil disimpan", Toast.LENGTH_LONG)
                                 .show();
@@ -788,59 +823,6 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
             }
         };
         AppController.getInstance().addToRequestQueue(register);
-    }
-
-    private void sendNotification(final String userId, final String message){
-        JsonObjectRequest jsonget = new JsonObjectRequest(Request.Method.GET, Link.BASE_URL_NOTIF, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            int sucses= response.getInt("success");
-                            if (sucses==1){
-
-                            }else{
-                                //tvstatus.setText("Tidak Ada Data");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    //tvstatus.setText("Check Koneksi Internet Anda");
-                } else if (error instanceof AuthFailureError) {
-                    //tvstatus.setText("AuthFailureError");
-                } else if (error instanceof ServerError) {
-                    //tvstatus.setText("Check ServerError");
-                } else if (error instanceof NetworkError) {
-                    //tvstatus.setText("Check NetworkError");
-                } else if (error instanceof ParseError) {
-                    //tvstatus.setText("Check ParseError");
-                }
-            }
-        }){
-            @Override
-            protected java.util.Map<String, String> getParams() {
-                java.util.Map<String, String> params = new HashMap<String, String>();
-                params.put("topics", userId);
-                params.put("message", message);
-                params.put("judul", "Booking Kos");
-                return params;
-            }
-            @Override
-            public java.util.Map<String, String> getHeaders() throws AuthFailureError {
-                java.util.Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/json");
-                return params;
-            }
-        };
-        AppController.getInstance().getRequestQueue().getCache().invalidate(Link.BASE_URL_NOTIF, true);
-        AppController.getInstance().addToRequestQueue(jsonget);
     }
 
     DatePickerDialog.OnDateSetListener dFrom =new DatePickerDialog.OnDateSetListener(){
