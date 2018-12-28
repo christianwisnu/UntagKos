@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import control.AppController;
+import control.ExceptionHandler;
 import control.Link;
 import control.RequestPermissionHandler;
 import fragment.FAwalCust;
@@ -79,14 +80,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.activity_main);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mRequestPermissionHandler = new RequestPermissionHandler();
             checkAndRequestPermissions();
             openPermission();
         }
-
+        //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
