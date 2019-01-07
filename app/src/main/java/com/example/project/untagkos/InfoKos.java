@@ -770,9 +770,7 @@ public class InfoKos extends AppCompatActivity implements OnMapReadyCallback,
                     slasid		=String.valueOf(Sucsess);
                     Log.i("Suceses", String.valueOf(Sucsess));
                     if (Sucsess > 0 ){
-                        //Link.BASE_URL_NOTIF+"?topics="+userId+
-                        //                "&message="+message+"&judul=Booking kos"
-                        notif2(idCust+"O", "Ada user yang booking kos", "Booking Kos");
+                        notif2(String.valueOf(idCust)+"O", "Ada user yang booking kos", "Booking Kos");
                         Toast.makeText(InfoKos.this,
                                 "Data berhasil disimpan", Toast.LENGTH_LONG)
                                 .show();
