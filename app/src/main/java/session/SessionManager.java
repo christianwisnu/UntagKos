@@ -59,7 +59,6 @@ public class SessionManager {
         editor.commit();
     }
 
-
     /**
      * Get stored session data
      * */

@@ -189,6 +189,8 @@ public class MainActivity extends AppCompatActivity
             changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "3");
         } else if (id == R.id.menuListKos) {
             changeFragment2ListUploadUserKriteria(new FListKos(), String.valueOf(sid), "ALL");
+            /*Intent i = new Intent(this, SearchKriteriaKos.class);
+            startActivityForResult(i,2)*/
         } else if (id == R.id.menuBooking) {
             changeFragmentListUploadUserKriteria(new FListBookingUser(), String.valueOf(sid));
         } else if (id == R.id.menuMap) {

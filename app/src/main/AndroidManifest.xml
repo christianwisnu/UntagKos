@@ -47,6 +47,7 @@
         <activity android:name=".AddHomeKos" />
         <activity android:name=".AddRekeningCust" />
         <activity android:name=".SearchBank" />
+        <activity android:name=".SearchKriteriaKos" />
         <activity android:name=".BayarDP" />
         <activity android:name=".ErorrBug" />
         <activity
