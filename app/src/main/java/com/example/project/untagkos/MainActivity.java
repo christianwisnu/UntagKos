@@ -188,9 +188,16 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.dataSewaKos) {//List penyewa
             changeFragmentListUploadKriteria(new FHomeKos(), String.valueOf(sid), "3");
         } else if (id == R.id.menuListKos) {
-            changeFragment2ListUploadUserKriteria(new FListKos(), String.valueOf(sid), "ALL");
-            /*Intent i = new Intent(this, SearchKriteriaKos.class);
-            startActivityForResult(i,2)*/
+            CheckGpsStatus();
+            if(GpsStatus == true){
+                //changeFragment2ListUploadUserKriteria(new FListKos(), String.valueOf(sid), "ALL");
+                Intent i = new Intent(this, SearchKriteriaKos.class);
+                startActivity(i);
+            }else {
+                Toast.makeText(MainActivity.this,
+                        "GPS harap diaktifkan terlebih dahulu!", Toast.LENGTH_LONG)
+                        .show();
+            }
         } else if (id == R.id.menuBooking) {
             changeFragmentListUploadUserKriteria(new FListBookingUser(), String.valueOf(sid));
         } else if (id == R.id.menuMap) {
@@ -362,7 +369,7 @@ public class MainActivity extends AppCompatActivity
                                     colums.setGambar5(object.getString("gambar5"));
                                     colums.setKodeKota(object.getString("kodeKota"));
                                     colums.setSisa(object.getInt("sisa"));
-                                    colums.setRating(object.getDouble("total_rating"));
+                                    //colums.setRating(object.getDouble("total_rating"));
                                     colums.setCountUser(object.getInt("count_user"));
                                     // list gmbar bl
                                     columnlist.add(colums);
